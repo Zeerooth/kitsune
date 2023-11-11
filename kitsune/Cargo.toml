@@ -98,6 +98,10 @@ async-graphql-axum = { version = "6.0.10", optional = true }
 # "oidc" feature
 kitsune-oidc = { path = "../crates/kitsune-oidc", optional = true }
 
+# "frontend" feature
+kitsune-fe-native = { path = "../crates/kitsune-fe-native", optional = true }
+dioxus-liveview = { version = "0.4.0", features = ["axum"], optional = true }
+
 [dev-dependencies]
 kitsune-test = { path = "../crates/kitsune-test" }
 pretty_assertions = "1.4.0"
@@ -105,7 +109,7 @@ serial_test = "2.0.0"
 tower = "0.4.13"
 
 [features]
-default = ["graphql-api", "mastodon-api"]
+default = ["frontend", "graphql-api", "mastodon-api"]
 graphql-api = [
     "dep:async-graphql",
     "dep:async-graphql-axum",
@@ -114,3 +118,4 @@ graphql-api = [
 mastodon-api = ["kitsune-core/mastodon-api"]
 meilisearch = ["kitsune-core/meilisearch"]
 oidc = ["dep:kitsune-oidc"]
+frontend = ["dep:kitsune-fe-native", "dep:dioxus-liveview"]

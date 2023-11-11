@@ -5,6 +5,15 @@ version = "0.0.0"
 publish = false
 
 [dependencies]
+kitsune = { path = "../kitsune" }
+async-graphql = { version = "6.0.10", default-features = false, features = [
+    "playground",
+    "tempfile",
+    "time",
+    "tracing",
+    "unblock",
+    "uuid",
+] }
 anyhow = "1.0.75"
 argh = "0.1.12"
 glob = "0.3.1"

@@ -15,7 +15,6 @@ inherits = "release"
 #lto = "thin"
 
 [workspace]
-exclude = ["xtask"]
 members = [
     "crates/kitsune-blocking",
     "crates/kitsune-cache",
@@ -25,6 +24,7 @@ members = [
     "crates/kitsune-db",
     "crates/kitsune-email",
     "crates/kitsune-embed",
+    "crates/kitsune-fe-native",
     "crates/kitsune-http-client",
     "crates/kitsune-http-signatures",
     "crates/kitsune-language",
@@ -43,6 +43,7 @@ members = [
     "lib/masto-id-convert",
     "lib/post-process",
     "lib/speedy-uuid",
+    "xtask",
 ]
 resolver = "2"
 

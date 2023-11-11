@@ -14,11 +14,11 @@ use axum::{
     Extension, Router,
 };
 
-type GraphQLSchema = Schema<RootQuery, RootMutation, EmptySubscription>;
+pub type GraphQLSchema = Schema<RootQuery, RootMutation, EmptySubscription>;
 
-mod mutation;
-mod query;
-mod types;
+pub mod mutation;
+pub mod query;
+pub mod types;
 
 pub trait ContextExt {
     fn state(&self) -> &Zustand;

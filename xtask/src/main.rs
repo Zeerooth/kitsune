@@ -3,6 +3,7 @@ extern crate tracing;
 
 use std::path::PathBuf;
 
+mod build_graphql_schema;
 mod build_scss;
 
 #[derive(argh::FromArgs)]
@@ -15,9 +16,19 @@ struct BuildScss {
 }
 
 #[derive(argh::FromArgs)]
+#[argh(subcommand, name = "build-graphql-schema")]
+/// Build a graphql schema
+struct BuildGraphqlSchema {
+    #[argh(option, default = "\"schema/schema.graphql\".into()")]
+    /// path to the file
+    path: PathBuf,
+}
+
+#[derive(argh::FromArgs)]
 #[argh(subcommand)]
 enum Subcommand {
     BuildScss(BuildScss),
+    BuildGraphqlSchema(BuildGraphqlSchema),
 }
 
 #[derive(argh::FromArgs)]
@@ -33,6 +44,9 @@ fn main() -> anyhow::Result<()> {
     let command: Command = argh::from_env();
     match command.subcommand {
         Subcommand::BuildScss(BuildScss { path }) => build_scss::build_scss(path)?,
+        Subcommand::BuildGraphqlSchema(BuildGraphqlSchema { path }) => {
+            build_graphql_schema::build_graphql_schema(path)?
+        }
     }
 
     Ok(())

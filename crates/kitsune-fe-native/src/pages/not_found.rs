@@ -1,0 +1,15 @@
+use dioxus::prelude::{
+    dioxus_elements, inline_props, render, Element, GlobalAttributes, Props, Scope,
+};
+
+#[inline_props]
+pub fn NotFound(cx: Scope, route: Vec<String>) -> Element {
+    render! {
+        h1 { "Page not found" }
+        p { "We are terribly sorry, but the page you requested doesn't exist." }
+        pre {
+            color: "red",
+            "log:\nattemped to navigate to: {route:?}"
+        }
+    }
+}

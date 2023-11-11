@@ -15,8 +15,10 @@ use tower_http::{
 };
 use utoipa_swagger_ui::SwaggerUi;
 
+#[cfg(feature = "frontend")]
+mod frontend;
 #[cfg(feature = "graphql-api")]
-mod graphql;
+pub mod graphql;
 mod handler;
 mod middleware;
 mod openapi;
@@ -50,6 +52,14 @@ pub fn create_router(state: Zustand, server_config: &ServerConfiguration) -> Rou
         .nest("/.well-known", well_known::routes())
         .nest_service("/public", ServeDir::new("public"));
 
+    #[cfg(feature = "frontend")]
+    {
+        router = router.nest(
+            "/experimental-fe",
+            frontend::routes(state.clone(), server_config.port),
+        );
+    }
+
     #[cfg(feature = "oidc")]
     {
         router = router.nest("/oidc", handler::oidc::routes());
@@ -65,11 +75,10 @@ pub fn create_router(state: Zustand, server_config: &ServerConfiguration) -> Rou
         router = router.merge(handler::mastodon::routes());
     }
 
-    router = router
-        .merge(SwaggerUi::new("/swagger-ui").url("/api-doc/openapi.json", api_docs()))
-        .fallback_service(
-            ServeDir::new(frontend_dir.as_str()).fallback(ServeFile::new(frontend_index_path)),
-        );
+    router = router.merge(SwaggerUi::new("/swagger-ui").url("/api-doc/openapi.json", api_docs()));
+    //.fallback_service(
+    //    ServeDir::new(frontend_dir.as_str()).fallback(ServeFile::new(frontend_index_path)),
+    //);
 
     router
         .layer(CatchPanicLayer::new())
