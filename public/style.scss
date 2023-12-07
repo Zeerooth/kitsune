@@ -1,0 +1,66 @@
+$background: #23383d;
+$text: #adccc6;
+$link: #92e8b6;
+$fg: #15302e;
+$fgText: #9cc5bd;
+$fgLink: #92e8b6;
+$topBar: #15302e;
+$topBarText: #65c89c;
+$btnText: #65c89c;
+$border: #65c89c;
+
+$panelShadow: 0px 0px 0px 1px rgba(94, 255, 200, 0.7);
+$contentMaxWidth: 900px;
+$sidebarMaxWidth: 600px;
+$contentWidth: 6fr;
+$sidebarWidth: 4fr;
+$navbarHeight: 50px;
+$mainGridColumns: $contentWidth $sidebarWidth;
+$mainContentMaxWidth: calc($contentMaxWidth + $sidebarMaxWidth);
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: $text;
+
+  a {
+    color: $link;
+    cursor: pointer;
+  }
+
+  nav {
+    background-color: $background;
+    box-shadow: var($panelShadow);
+    width: 100%;
+
+    .nav-inner {
+      max-width: $mainContentMaxWidth;
+      width: 100%;
+      display: grid;
+    }
+  }
+
+  .main {
+    .content-wrap {
+      margin: auto;
+      max-width: $mainContentMaxWidth;
+      display: grid;
+      position: relative;
+      justify-content: center;
+      grid-template-columns: $mainGridColumns;
+
+      >div {
+        top: $navbarHeight;
+      }
+
+      .content {
+        max-width: $contentMaxWidth;
+      }
+      .sidebar {
+        position: sticky;
+        max-width: $sidebarMaxWidth;
+      }
+    }
+  }
+}

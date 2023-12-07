@@ -1,10 +1,21 @@
-#[derive(Debug)]
-pub struct AppState {
-    pub token: Option<String>,
+use surf::Url;
+
+use crate::oauth::OAuthTokenData;
+
+#[derive(Debug, Clone)]
+pub enum AuthState {
+    Login,
+    Register,
+    LoggedIn(OAuthTokenData),
 }
 
-impl AppState {
+impl AuthState {
     pub fn new() -> Self {
-        Self { token: None }
+        Self::Login
     }
+}
+
+#[derive(Debug, Clone)]
+pub struct Homeserver {
+    pub endpoint: Url,
 }

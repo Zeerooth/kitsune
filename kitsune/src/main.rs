@@ -97,7 +97,11 @@ async fn boot() -> eyre::Result<()> {
         .context("Failed to connect to the Redis instance for the job scheduler")?;
     let state = kitsune::initialise_state(&config, conn, job_queue.clone()).await?;
 
-    tokio::spawn(kitsune::http::run(state.clone(), config.server.clone()));
+    tokio::spawn(kitsune::http::run(
+        state.clone(),
+        config.server.clone(),
+        config.url.clone(),
+    ));
     tokio::spawn(kitsune_job_runner::run_dispatcher(
         job_queue,
         state.core.clone(),
